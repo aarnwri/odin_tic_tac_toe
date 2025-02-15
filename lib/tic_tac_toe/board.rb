@@ -1,7 +1,8 @@
 module TicTacToe
-class Board
-  def initialize
-    @tiles = Array.new(3) { Array.new(3) { nil } }
+  # Represents the board part of TicTacToe
+  class Board
+    def initialize
+      @tiles = Array.new(3) { Array.new(3) { nil } }
+    end
   end
-end # class Board
-end # module TicTacToe
+end
