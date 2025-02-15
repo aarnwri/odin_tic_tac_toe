@@ -15,6 +15,7 @@ module TicTacToe
       puts "now playing the game: #{@player1.inspect}"
       puts "also: #{@player2.inspect}"
       puts "using board: #{@board.inspect}"
+      @board.render
     end
   end
 end
