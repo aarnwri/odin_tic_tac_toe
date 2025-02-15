@@ -22,7 +22,6 @@ module TicTacToe
       _render_row_divider
 
       @tiles.each_with_index do |row, row_idx|
-        # first we need the row label
         str = "\t#{ROW_LABELS[row_idx]} |"
         row.each_with_index do |col, _col_idx|
           str += "  #{col || ' '}  |"
@@ -30,6 +29,12 @@ module TicTacToe
         puts str
         _render_row_divider
       end
+    end
+
+    def add_mark(mark, location)
+      _validate_location(location)
+      row_idx, col_idx = _parse_location(location)
+      @tiles[row_idx][col_idx] = mark
     end
 
     private
@@ -42,6 +47,52 @@ module TicTacToe
 
     def _render_row_divider
       puts "\t   -----|-----|-----"
+    end
+
+    # Turns a user given location, i.e. "a3" into [row, col]
+    # coordinates
+    def _parse_location(location)
+      row, col = location.chars
+      row = ROW_LABELS.index(row)
+      col = col.to_i - 1
+      [row, col]
+    end
+
+    # Make sure the mark is the correct format
+    # i.e. a1, or c3
+    def _validate_location(location)
+      raise LocationFormatError.new("", location) if location.length != 2
+
+      row, col = location.chars
+      raise BadRowError.new("", row) unless ROW_LABELS.include?(row)
+      raise BadColError.new("", col) unless (1..3).include?(col.to_i)
+    end
+
+    # Error raised when anticipating a given location won't be parsable
+    class LocationFormatError < StandardError
+      def initialize(_msg, location)
+        msg  = "Location (#{location}) given, not correctly formatted. "
+        msg += "It should be two chars, coordinates, i.e. a3"
+        super(msg)
+      end
+    end
+
+    # Error raised when row given is not on the board
+    class BadRowError < StandardError
+      def initialize(_msg, row)
+        msg  = "Row (#{row}) given not on board. "
+        msg += "It should be one of #{ROW_LABELS.join(', ')}"
+        super(msg)
+      end
+    end
+
+    # Error raised when row given is not on the board
+    class BadColError < StandardError
+      def initialize(_msg, col)
+        msg  = "Column (#{col}) given not on board. "
+        msg += "It should be one of #{[1, 2, 3].join(', ')}"
+        super(msg)
+      end
     end
   end
 end

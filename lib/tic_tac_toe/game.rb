@@ -16,6 +16,11 @@ module TicTacToe
       puts "also: #{@player2.inspect}"
       puts "using board: #{@board.inspect}"
       @board.render
+
+      move = @player1.ask_user_for_move
+      @player1.place_mark(@board, move)
+
+      @board.render
     end
   end
 end
