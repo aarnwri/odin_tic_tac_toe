@@ -14,5 +14,10 @@ module TicTacToe
       @name  = name
       @token = token
     end
+
+    def ask_user_for_move
+      print "Player #{@name}, what is your move? "
+      gets.chomp
+    end
   end
 end
