@@ -2,9 +2,8 @@
 
 require_relative './lib/tic_tac_toe'
 
-puts "this is where we will start the game from... any options will go here"
+player_1 = TicTacToe::Player.create(1)
+player_2 = TicTacToe::Player.create(2)
 
-person_1 = "bob"
-person_2 = "bill"
-
-game = TicTacToe::Game.new(person_1, person_2)
+game = TicTacToe::Game.new(player_1, player_2)
+game.play
