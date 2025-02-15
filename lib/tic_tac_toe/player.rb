@@ -19,5 +19,9 @@ module TicTacToe
       print "Player #{@name}, what is your move? "
       gets.chomp
     end
+
+    def place_mark(board, location)
+      board.add_mark(@token, location)
+    end
   end
 end
