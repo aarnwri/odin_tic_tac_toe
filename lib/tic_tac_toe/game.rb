@@ -9,9 +9,9 @@ module TicTacToe
     end
 
     def play
-      _iterate_turn until @current_player.won?(@board)
+      _iterate_turn until _finished?
       _render_board
-      _congradulate_winner
+      _congradulate_players
     end
 
     private
@@ -45,8 +45,17 @@ module TicTacToe
       _add_mark
     end
 
-    def _congradulate_winner
-      puts "Congrats! to #{@current_player.name}, you won!"
+    def _finished?
+      @current_player.won?(@board) || @board.full?
+    end
+
+    def _congradulate_players
+      if @current_player.won?(@board)
+        puts "Congrats! to #{@current_player.name}, you won!"
+      else
+        # Must have been a tie
+        puts "Congrats! to both of you, it's a cat's game! (tie)"
+      end
     end
   end
 end

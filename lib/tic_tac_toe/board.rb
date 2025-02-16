@@ -39,6 +39,10 @@ module TicTacToe
       @tiles[row_idx][col_idx] = mark
     end
 
+    def full?
+      @tiles.flatten.none?(&:nil?)
+    end
+
     private
 
     def _render_header
