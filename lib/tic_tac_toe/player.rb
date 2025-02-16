@@ -37,7 +37,8 @@ module TicTacToe
       end
 
       # Check diagonals
-      return true if _check_diagonals(board)
+      return true if _check_left_diagonal(board)
+      return true if _check_right_diagonal(board)
 
       false
     end
@@ -48,10 +49,15 @@ module TicTacToe
       tiles.all? { |tile| tile == @token }
     end
 
-    def _check_diagonals(board)
+    def _check_left_diagonal(board)
       return true if _check_three(
         [board.tiles[0][0], board.tiles[1][1], board.tiles[2][2]]
       )
+
+      false
+    end
+
+    def _check_right_diagonal(board)
       return true if _check_three(
         [board.tiles[0][2], board.tiles[1][1], board.tiles[2][0]]
       )
