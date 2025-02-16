@@ -79,7 +79,7 @@ module TicTacToe
 
     def _validate_location_empty(location)
       row, col = _parse_location(location)
-      raise NonEmptyTile.new("", row, col) unless @tiles[row][col].nil?
+      raise NonEmptyTile.new("", location) unless @tiles[row][col].nil?
     end
 
     # Error raised when anticipating a given location won't be parsable
@@ -109,6 +109,7 @@ module TicTacToe
       end
     end
 
+    # Error raised when the tile on the board is already populated
     class NonEmptyTile < StandardError
       def initialize(_msg, location)
         msg = "Location (#{location}) is not empty. "
