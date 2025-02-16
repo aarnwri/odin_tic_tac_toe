@@ -17,6 +17,8 @@ module TicTacToe
       @tiles = Array.new(3) { Array.new(3) { nil } }
     end
 
+    attr_reader :tiles
+
     def render
       _render_header
       _render_row_divider

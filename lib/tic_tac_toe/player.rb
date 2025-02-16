@@ -23,5 +23,40 @@ module TicTacToe
     def place_mark(board, location)
       board.add_mark(@token, location)
     end
+
+    # Checks the board for 3 in a row of the player's token
+    def won?(board)
+      (0..2).each do |i|
+        # Check row
+        return true if _check_three(board.tiles[i])
+
+        # Check column
+        return true if _check_three(
+          [board.tiles[0][i], board.tiles[1][i], board.tiles[2][i]]
+        )
+      end
+
+      # Check diagonals
+      return true if _check_diagonals(board)
+
+      false
+    end
+
+    private
+
+    def _check_three(tiles)
+      tiles.all? { |tile| tile == @token }
+    end
+
+    def _check_diagonals(board)
+      return true if _check_three(
+        [board.tiles[0][0], board.tiles[1][1], board.tiles[2][2]]
+      )
+      return true if _check_three(
+        [board.tiles[0][2], board.tiles[1][1], board.tiles[2][0]]
+      )
+
+      false
+    end
   end
 end
