@@ -60,14 +60,26 @@ module TicTacToe
       [row, col]
     end
 
-    # Make sure the mark is the correct format
-    # i.e. a1, or c3
     def _validate_location(location)
-      raise LocationFormatError.new("", location) if location.length != 2
+      _validate_location_format(location)
+      _validate_location_on_board(location)
+      _validate_location_empty(location)
+    end
 
+    def _validate_location_format(location)
+      # Make sure given location is only 2 chars, ie a1
+      raise LocationFormatError.new("", location) if location.length != 2
+    end
+
+    def _validate_location_on_board(location)
       row, col = location.chars
       raise BadRowError.new("", row) unless ROW_LABELS.include?(row)
       raise BadColError.new("", col) unless (1..3).include?(col.to_i)
+    end
+
+    def _validate_location_empty(location)
+      row, col = _parse_location(location)
+      raise NonEmptyTile.new("", row, col) unless @tiles[row][col].nil?
     end
 
     # Error raised when anticipating a given location won't be parsable
@@ -94,6 +106,12 @@ module TicTacToe
         msg  = "Column (#{col}) given not on board. "
         msg += "It should be one of #{[1, 2, 3].join(', ')}"
         super(msg)
+      end
+    end
+
+    class NonEmptyTile < StandardError
+      def initialize(_msg, location)
+        msg = "Location (#{location}) is not empty. "
       end
     end
   end
