@@ -9,12 +9,18 @@ module TicTacToe
     end
 
     def play
+      _iterate_first_turn
       _iterate_turn until _finished?
       _render_board
       _congradulate_players
     end
 
     private
+
+    def _iterate_first_turn
+      _render_board
+      _add_mark
+    end
 
     def _iterate_turn
       _swap_current_player
