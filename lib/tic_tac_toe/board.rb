@@ -112,6 +112,7 @@ module TicTacToe
     class NonEmptyTile < StandardError
       def initialize(_msg, location)
         msg = "Location (#{location}) is not empty. "
+        super(msg)
       end
     end
   end
