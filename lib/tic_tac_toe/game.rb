@@ -10,6 +10,8 @@ module TicTacToe
 
     def play
       _iterate_turn until @current_player.won?(@board)
+      _render_board
+      _congradulate_winner
     end
 
     private
@@ -41,6 +43,10 @@ module TicTacToe
       puts "Sorry, that move is invalid."
       puts e.message
       _add_mark
+    end
+
+    def _congradulate_winner
+      puts "Congrats! to #{@current_player.name}, you won!"
     end
   end
 end

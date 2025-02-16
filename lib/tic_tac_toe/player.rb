@@ -15,6 +15,8 @@ module TicTacToe
       @token = token
     end
 
+    attr_reader :name, :token
+
     def ask_user_for_move
       print "Player #{@name}, what is your move? "
       gets.chomp
