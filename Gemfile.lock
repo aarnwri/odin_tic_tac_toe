@@ -37,6 +37,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  rubocop (~> 1.72)
   rubocop-performance
 
 BUNDLED WITH

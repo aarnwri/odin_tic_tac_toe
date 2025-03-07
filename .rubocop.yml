@@ -11,6 +11,19 @@
 
 AllCops:
   NewCops: enable
+  Exclude:
+    - 'Gemfile'
+    - 'spec/spec_helper.rb'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/*'
+    - 'spec_answers/*'
+
+Layout/LineLength:
+  Exclude:
+    - 'spec/*'
+    - 'spec_answers/*'
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
