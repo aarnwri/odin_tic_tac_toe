@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TicTacToe
   class Board
     # Error raised when anticipating a given location won't be parsable

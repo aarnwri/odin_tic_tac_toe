@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TicTacToe
   # Runs the game loop for TicTacToe
   class Game
@@ -12,7 +14,7 @@ module TicTacToe
       _iterate_first_turn
       _iterate_turn until _finished?
       _render_board
-      _congradulate_players
+      _congratulate_players
     end
 
     private
@@ -36,10 +38,6 @@ module TicTacToe
       @board.render
     end
 
-    def _fetch_move
-      @current_player.ask_user_for_move
-    end
-
     def _add_mark
       @current_player.place_mark(@board)
     end
@@ -48,7 +46,7 @@ module TicTacToe
       @current_player.won?(@board) || @board.full?
     end
 
-    def _congradulate_players
+    def _congratulate_players
       if @current_player.won?(@board)
         puts "Congrats! to #{@current_player.name}, you won!"
       else

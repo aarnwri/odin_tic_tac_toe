@@ -17,16 +17,11 @@ AllCops:
 
 Metrics/BlockLength:
   Exclude:
-    - 'spec/*'
-    - 'spec_answers/*'
+    - 'spec/**/*'
 
 Layout/LineLength:
   Exclude:
-    - 'spec/*'
-    - 'spec_answers/*'
+    - 'spec/**/*'
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
-
-Style/FrozenStringLiteralComment:
-  EnforcedStyle: never
