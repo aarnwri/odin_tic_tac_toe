@@ -22,8 +22,15 @@ module TicTacToe
       gets.chomp
     end
 
-    def place_mark(board, location)
-      board.add_mark(@token, location)
+    def place_mark(board)
+      location = ask_user_for_move
+      begin
+        board.add_mark(@token, location)
+      rescue *Board::ERRORS => e
+        puts "Sorry, that move is invalid."
+        puts e.message
+        place_mark(board)
+      end
     end
 
     # Checks the board for 3 in a row of the player's token

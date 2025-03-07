@@ -41,14 +41,7 @@ module TicTacToe
     end
 
     def _add_mark
-      @current_player.place_mark(@board, _fetch_move)
-    rescue Board::LocationFormatError,
-           Board::BadRowError,
-           Board::BadColError,
-           Board::NonEmptyTile => e
-      puts "Sorry, that move is invalid."
-      puts e.message
-      _add_mark
+      @current_player.place_mark(@board)
     end
 
     def _finished?
