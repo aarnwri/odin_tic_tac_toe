@@ -1,31 +1,42 @@
 # frozen_string_literal: true
 
+require_relative "player/errors"
+
 module TicTacToe
   # Represents the player object
   class Player
-    # Constructor for creating players... In this case we're getting
-    # user input from the console.
-    def self.create(token)
-      puts "Welcome to Tic Tac Toe, player #{token}."
-      print "What do you call yourself? "
-      name = gets.chomp
-      Player.new(name, token)
+    VALID_TOKENS = %w[X O].freeze
+
+    class << self
+      # Constructor for creating players... In this case we're getting
+      # user input from the console.
+      def create(token)
+        validate_token(token)
+
+        puts "Welcome to Tic Tac Toe, player #{token}."
+        print "What do you call yourself? "
+        name = gets.chomp
+        Player.new(name, token)
+      end
+
+      def validate_token(token)
+        return if VALID_TOKENS.include?(token)
+
+        raise InvalidToken.new(nil, token, VALID_TOKENS)
+      end
     end
 
     def initialize(name, token)
+      _validate_token(token)
+
       @name  = name
       @token = token
     end
 
     attr_reader :name, :token
 
-    def ask_user_for_move
-      print "Player #{@name}, what is your move? "
-      gets.chomp
-    end
-
     def place_mark(board)
-      location = ask_user_for_move
+      location = _ask_user_for_move
       begin
         board.add_mark(@token, location)
       rescue *Board::ERRORS => e
@@ -55,6 +66,15 @@ module TicTacToe
     end
 
     private
+
+    def _validate_token(token)
+      self.class.validate_token(token)
+    end
+
+    def _ask_user_for_move
+      print "Player #{@name}, what is your move? "
+      gets.chomp
+    end
 
     def _check_three(tiles)
       tiles.all? { |tile| tile == @token }

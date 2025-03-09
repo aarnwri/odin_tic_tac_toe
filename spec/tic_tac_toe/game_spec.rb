@@ -2,7 +2,7 @@
 
 require_relative "../../lib/tic_tac_toe"
 
-describe TicTacToe::Game do
+RSpec.describe TicTacToe::Game do
   let(:player1) { double "p1" }
   let(:player2) { double "p2" }
 
@@ -130,6 +130,8 @@ describe TicTacToe::Game do
   end
 
   describe "#_congratulate_players" do
+    before { allow(game).to receive(:puts) }
+
     context "when the current player has won the game" do
       it "honors the player with the use of their name" do
         current_player = game.instance_variable_get("@current_player")
