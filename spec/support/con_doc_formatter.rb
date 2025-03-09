@@ -3,8 +3,9 @@
 RSpec::Support.require_rspec_core "formatters/base_text_formatter"
 RSpec::Support.require_rspec_core "formatters/console_codes"
 
-# This custom formatter is here so I can put the context on the same line
-# as the example... I think it will be less annoying
+# This is a condensed version of the documentation formatter.
+# It forces nested contexts into the example, to limit the nesting of the
+# output.
 class ConDocFormatter < RSpec::Core::Formatters::BaseTextFormatter
   RSpec::Core::Formatters.register(
     self, :example_started, :example_group_started, :example_group_finished,
