@@ -29,8 +29,8 @@ RSpec.describe TicTacToe::Game do
 
   # There's nothing to test with this method, since it's a script method
   # I'd be stubbing every method here.
-  describe "#play" do
-  end
+  # describe "#play" do
+  # end
 
   # This is also a script method, designed to handle the first turn of the
   # game, since we don't need to update @current_player on the first turn
