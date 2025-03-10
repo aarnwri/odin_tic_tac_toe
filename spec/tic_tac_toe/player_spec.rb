@@ -71,12 +71,47 @@ RSpec.describe TicTacToe::Player do
   end
 
   describe "#place_mark" do
-    xit "gets a location from the user"
-    xit "delegates adding the mark to the board"
+    it "gets a location from the user" do
+      player = described_class.new("tester", "X")
+      board  = instance_double(TicTacToe::Board)
+      allow(board).to receive(:add_mark)
+
+      expect(player).to receive(:_ask_user_for_move)
+      player.place_mark(board)
+    end
+
+    it "delegates adding the mark to the board" do
+      player = described_class.new("tester", "X")
+      board  = instance_double(TicTacToe::Board)
+      allow(player).to receive(:_ask_user_for_move)
+
+      expect(board).to receive(:add_mark)
+      player.place_mark(board)
+    end
 
     context "when the user input causes a board error" do
-      xit "outputs the error message"
-      xit "calls place_mark, to let the user fix their bad input"
+      before do
+        @player = described_class.new("tester", "X")
+        @board  = instance_double(TicTacToe::Board)
+        allow(@player).to receive(:_ask_user_for_move).and_return("a4", "a3")
+        allow(@board).to(
+          receive(:add_mark)
+          .with("X", "a4")
+          .and_raise(TicTacToe::Board::ERRORS[0].new(nil, "a4"))
+        )
+        allow(@board).to receive(:add_mark).with("X", "a3")
+      end
+
+      it "outputs the error message" do
+        expect(@player).to receive(:puts).with("Sorry, that move is invalid.")
+        expect(@player).to receive(:puts)
+        @player.place_mark(@board)
+      end
+
+      it "calls place_mark, to let the user fix their bad input" do
+        expect(@player).to receive(:place_mark).with(@board)
+        @player.place_mark(@board)
+      end
     end
   end
 
