@@ -47,12 +47,30 @@ module TicTacToe
       @tiles.flatten.none?(&:nil?)
     end
 
+    def three_in_a_row?(token)
+      three_in_a_row_groups = [
+        # rows
+        [@tiles[0][0], @tiles[1][0], @tiles[2][0]],
+        [@tiles[0][1], @tiles[1][1], @tiles[2][1]],
+        [@tiles[0][2], @tiles[1][2], @tiles[2][2]],
+        # columns
+        [@tiles[0][0], @tiles[0][1], @tiles[0][2]],
+        [@tiles[1][0], @tiles[1][1], @tiles[1][2]],
+        [@tiles[2][0], @tiles[2][1], @tiles[2][2]],
+        # diagonals
+        [@tiles[0][0], @tiles[1][1], @tiles[2][2]],
+        [@tiles[2][0], @tiles[1][1], @tiles[0][2]]
+      ]
+
+      three_in_a_row_groups.any? { |group| group.all? { |tile| tile == token } }
+    end
+
     private
 
     def _render_header
       puts ""
       puts "\tCurrent board state:"
-      puts "\t     1     2     3   "
+      puts "\t     1     2     3  "
     end
 
     def _render_row_divider
@@ -87,7 +105,7 @@ module TicTacToe
 
     def _validate_location_empty(location)
       row, col = _parse_location(location)
-      raise NonEmptyTile.new("", location) unless @tiles[row][col].nil?
+      raise NonEmptyTileError.new("", location) unless @tiles[row][col].nil?
     end
   end
 end

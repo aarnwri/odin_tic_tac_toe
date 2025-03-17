@@ -30,7 +30,7 @@ module TicTacToe
     end
 
     # Error raised when the tile on the board is already populated
-    class NonEmptyTile < StandardError
+    class NonEmptyTileError < StandardError
       def initialize(_msg, location)
         msg = "Location (#{location}) is not empty. "
         super(msg)
@@ -41,7 +41,7 @@ module TicTacToe
       LocationFormatError,
       BadRowError,
       BadColError,
-      NonEmptyTile
+      NonEmptyTileError
     ].freeze
   end
 end

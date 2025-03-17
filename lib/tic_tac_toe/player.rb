@@ -5,7 +5,7 @@ require_relative "player/errors"
 module TicTacToe
   # Represents the player object
   class Player
-    VALID_TOKENS = %w[X O].freeze
+    TOKENS = %w[X O].freeze
 
     class << self
       # Constructor for creating players... In this case we're getting
@@ -20,9 +20,9 @@ module TicTacToe
       end
 
       def validate_token(token)
-        return if VALID_TOKENS.include?(token)
+        return if TOKENS.include?(token)
 
-        raise InvalidToken.new(nil, token, VALID_TOKENS)
+        raise InvalidTokenError.new(nil, token)
       end
     end
 
@@ -48,21 +48,7 @@ module TicTacToe
 
     # Checks the board for 3 in a row of the player's token
     def won?(board)
-      (0..2).each do |i|
-        # Check row
-        return true if _check_three(board.tiles[i])
-
-        # Check column
-        return true if _check_three(
-          [board.tiles[0][i], board.tiles[1][i], board.tiles[2][i]]
-        )
-      end
-
-      # Check diagonals
-      return true if _check_left_diagonal(board)
-      return true if _check_right_diagonal(board)
-
-      false
+      board.three_in_a_row?(@token)
     end
 
     private
@@ -74,26 +60,6 @@ module TicTacToe
     def _ask_user_for_move
       print "Player #{@name}, what is your move? "
       gets.chomp
-    end
-
-    def _check_three(tiles)
-      tiles.all? { |tile| tile == @token }
-    end
-
-    def _check_left_diagonal(board)
-      return true if _check_three(
-        [board.tiles[0][0], board.tiles[1][1], board.tiles[2][2]]
-      )
-
-      false
-    end
-
-    def _check_right_diagonal(board)
-      return true if _check_three(
-        [board.tiles[0][2], board.tiles[1][1], board.tiles[2][0]]
-      )
-
-      false
     end
   end
 end

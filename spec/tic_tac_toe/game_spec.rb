@@ -6,7 +6,7 @@ RSpec.describe TicTacToe::Game do
   let(:player1) { double "p1" }
   let(:player2) { double "p2" }
 
-  subject(:game) { TicTacToe::Game.new(player1, player2) }
+  subject(:game) { described_class.new(player1, player2) }
 
   let(:board) { game.instance_variable_get("@board") }
 

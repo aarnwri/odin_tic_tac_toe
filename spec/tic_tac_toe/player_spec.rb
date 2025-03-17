@@ -12,7 +12,7 @@ RSpec.describe TicTacToe::Player do
 
     it "raises an error if the player token is not X, or O" do
       block = proc { described_class.validate_token("L") }
-      expect(&block).to raise_error(TicTacToe::Player::InvalidToken)
+      expect(&block).to raise_error(TicTacToe::Player::InvalidTokenError)
     end
 
     it "gets the player's name from the user, and returns appropriate player" do
@@ -26,7 +26,7 @@ RSpec.describe TicTacToe::Player do
   end
 
   describe "::validate_token" do
-    TicTacToe::Player::VALID_TOKENS.each do |token|
+    TicTacToe::Player::TOKENS.each do |token|
       it "returns true when token is #{token}" do
         block = proc { described_class.validate_token(token) }
         expect(&block).not_to raise_error
@@ -35,7 +35,7 @@ RSpec.describe TicTacToe::Player do
 
     it "raises an error with invalid token" do
       block = proc { described_class.validate_token("L") }
-      expect(&block).to raise_error(TicTacToe::Player::InvalidToken)
+      expect(&block).to raise_error(TicTacToe::Player::InvalidTokenError)
     end
   end
 
@@ -52,7 +52,7 @@ RSpec.describe TicTacToe::Player do
 
     it "raises an error if the player token is not X, or O" do
       block = proc { described_class.new(player_name, "L") }
-      expect(&block).to raise_error(TicTacToe::Player::InvalidToken)
+      expect(&block).to raise_error(TicTacToe::Player::InvalidTokenError)
     end
   end
 
@@ -116,26 +116,24 @@ RSpec.describe TicTacToe::Player do
   end
 
   describe "#won?" do
-    xit "returns true for all three in a row conditions"
-    xit "returns false for non three in a row conditions"
+    it "delegates checking for 3 in a row to the board" do
+      token  = "X"
+      player = described_class.new("tester", token)
+      board  = instance_double(TicTacToe::Board)
+
+      expect(board).to receive(:three_in_a_row?).with(token)
+      player.won?(board)
+    end
   end
 
   describe "#_ask_user_for_move" do
-    xit "addresses the player by name, to get user input"
-  end
+    it "addresses the player by name, to get user input" do
+      name   = "tester"
+      player = described_class.new(name, "X")
+      allow(player).to receive(:gets).and_return("a3\n")
 
-  describe "#_check_three" do
-    xit "returns true when the three tiles given match the user's token"
-    xit "returns false when any of the three tiles given don't match the user's token"
-  end
-
-  describe "#_check_left_diagonal" do
-    xit "returns true when the board's diagonal, top left to bottom right, match the user's token"
-    xit "returns false when the board's diagonal, top left to bottom right, does not match the user's token"
-  end
-
-  describe "#_check_right_diagonal" do
-    xit "returns true when the board's diagonal, top right to bottom left, match the user's token"
-    xit "returns false when the board's diagonal, top right to bottom left, does not match the user's token"
+      expect(player).to receive(:print).once.with(/.*#{name}.*/)
+      player.send(:_ask_user_for_move)
+    end
   end
 end
